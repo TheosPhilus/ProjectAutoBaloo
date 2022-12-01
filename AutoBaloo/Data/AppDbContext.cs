@@ -26,6 +26,8 @@ namespace AutoBaloo.Data
             }
         }
 
+        
+
         public DbSet<Vehicule> Vehicules { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Reservation> Reservations { get; set; }

@@ -1,4 +1,5 @@
 using AutoBaloo.Data;
+using AutoBaloo.Data.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,8 @@ namespace AutoBaloo
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString
 
                 ("DefaulConnectionString")));
+            //service configuration
+            services.AddScoped<IVehiculeService, VehiculeService>();
 
             services.AddControllersWithViews();
         }

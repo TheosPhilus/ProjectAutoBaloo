@@ -20,7 +20,7 @@ namespace AutoBaloo.Controllers
         public async Task<IActionResult> Index()
         {
             var allReservations = await _context.Reservations.ToListAsync();
-            return View();
+            return View(allReservations);
         }
     }
 }

@@ -5,22 +5,207 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using AutoBaloo.Data.Service;
+using AutoBaloo.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AutoBaloo.Controllers
 {
     public class VehiculeController : Controller
     {
-        private readonly AppDbContext _context;
 
-        public VehiculeController(AppDbContext context)
+
+
+        private readonly IVehiculeService _VehiculeRepository;
+
+        private readonly IHostingEnvironment hostingEnvironment;
+
+
+        public VehiculeController(IVehiculeService service,
+                                   IHostingEnvironment hostingEnvironment)
         {
-            _context = context;
+            _VehiculeRepository = service;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
-        public async Task <IActionResult >Index()
+
+        //afficher la liste des véhicule 
+        public async Task<IActionResult> Index()
         {
-            var allVehicules = await _context.Vehicules.ToListAsync();
+            var data = await _VehiculeRepository.GetAllAsync();
+            return View(data);
+        }
+
+
+        //créer une nouvelle véhicule 
+
+        public IActionResult Create()
+        {
+
             return View();
         }
+
+
+        [HttpPost]
+
+        public IActionResult Create(VehiculeCreateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+
+                // If the Photo property on the incoming model object is not null, then the user
+                // has selected an image to upload.
+                if (model.Image != null)
+                {
+                    // The image must be uploaded to the images folder in wwwroot
+                    // To get the path of the wwwroot folder we are using the inject
+                    // HostingEnvironment service provided by ASP.NET Core
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                    // To make sure the file name is unique we are appending a new
+                    // GUID value and and an underscore to the file name
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    // Use CopyTo() method provided by IFormFile interface to
+                    // copy the file to wwwroot/images folder
+                    model.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
+                Vehicule newVehicule = new Vehicule
+                {
+                    MarqueVehicule = model.MarqueVehicule,
+                    DescriptionVehicule = model.DescriptionVehicule,
+                    StatutVehicule = model.StatutVehicule,
+                    CouleurVehicule = model.CouleurVehicule,
+                    KM = model.KM,
+                    TypeCarbu = model.TypeCarbu,
+                    DateConstruct = model.DateConstruct,
+                    PrixVehicule = model.PrixVehicule,
+                    //Stocke le nom du fichier dans la propriété PhotoPath de l'objet voitures
+                    // qui est enregistré dans la table de la base de données des voitures
+                    ImageURL = uniqueFileName
+                };
+
+                _VehiculeRepository.AddAsync(newVehicule);
+                return RedirectToAction("Index", new { id = newVehicule.Id });
+            }
+
+            return View();
+        }
+
+        // afficher une voiture par son ID 
+        public async Task<IActionResult> Details(int id)
+        {
+            var VehiculeDetails = await _VehiculeRepository.GetByIdAsync(id);
+            {
+                if (VehiculeDetails == null) return View("Empty");
+                return View(VehiculeDetails);
+            }
+        }
+
+
+        //Modifier les voitures par son Id 
+
+        [HttpGet]
+        public async Task<ViewResult> Edit(int id)
+        {
+            Vehicule vehicule = await _VehiculeRepository.GetByIdAsync(id);
+            VehiculeEditViewModel vehiculeEditViewModel = new VehiculeEditViewModel
+            {
+                MarqueVehicule = vehicule.MarqueVehicule,
+                DescriptionVehicule = vehicule.DescriptionVehicule,
+                StatutVehicule = vehicule.StatutVehicule,
+                CouleurVehicule = vehicule.CouleurVehicule,
+                KM = vehicule.KM,
+                TypeCarbu = vehicule.TypeCarbu,
+                DateConstruct = vehicule.DateConstruct,
+                PrixVehicule = vehicule.PrixVehicule,
+                //Stocke le nom du fichier dans la propriété PhotoPath de l'objet voitures
+                // qui est enregistré dans la table de la base de données des voitures
+                ExistingPhotoPath = vehicule.ImageURL
+            };
+            return View(vehiculeEditViewModel);
+        }
+
+
+
+
+        // Grâce à la liaison de modèle, le paramètre de méthode d'action
+        // VehiculeEditViewModel reçoit les données postées du formulaire d'édition
+        [HttpPost]
+        public async Task< IActionResult> Edit(VehiculeEditViewModel model)
+        {
+            // Vérifie si les données fournies sont valides, sinon restitue la vue d'édition
+            // afin que l'utilisateur puisse corriger et soumettre à nouveau le formulaire d'édition
+            if (ModelState.IsValid)
+            {
+                // Récupérer les voitures en cours d'édition à partir de la base de données
+                Vehicule vehicule = await _VehiculeRepository.GetByIdAsync(model.Id);
+                //Mettre à jour l'objet voitures avec les données de l'objet modèle
+                vehicule.MarqueVehicule = model.MarqueVehicule;
+                vehicule.DescriptionVehicule = model.DescriptionVehicule;
+                vehicule.StatutVehicule = model.StatutVehicule;
+                vehicule.CouleurVehicule = model.CouleurVehicule;
+                vehicule.KM = model.KM;
+                vehicule.TypeCarbu = model.TypeCarbu;
+                vehicule.DateConstruct = model.DateConstruct;
+                vehicule.PrixVehicule = model.PrixVehicule;
+
+
+                // Si l'utilisateur veut changer la photo, une nouvelle photo sera
+                // téléchargé et la propriété Photo sur l'objet modèle reçoit
+                // la photo téléchargée. Si la propriété Photo est nulle, l'utilisateur a
+                // ne télécharge pas de nouvelle photo et conserve sa photo existante
+                if (model.Image != null)
+                {
+                    // If a new photo is uploaded, the existing photo must be
+                    // deleted. So check if there is an existing photo and delete
+                    if (model.ExistingPhotoPath != null)
+                    {
+                        string filePath = Path.Combine(hostingEnvironment.WebRootPath,
+                            "images", model.ExistingPhotoPath);
+                        System.IO.File.Delete(filePath);
+                    }
+                    // Enregistrer la nouvelle photo dans le dossier wwwroot/images et mettre à jour
+                    // Propriété PhotoPath de l'objet employé qui sera
+                    // éventuellement enregistré dans la base de données
+                    vehicule.ImageURL = ProcessUploadedFile(model);
+                }
+
+                // Appelez la méthode de mise à jour sur le service de référentiel en lui passant le
+                // objet employé pour mettre à jour les données dans la table de la base de données
+                Vehicule updatedEmployee = await _VehiculeRepository.Update(vehicule);
+
+                return RedirectToAction("index");
+            }
+
+            return View(model);
+        }
+
+        private string ProcessUploadedFile(VehiculeEditViewModel model)
+        {
+            string uniqueFileName = null;
+
+            if (model.Image != null)
+            {
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.Image.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
     }
+
+
+
+
 }
+
+
+

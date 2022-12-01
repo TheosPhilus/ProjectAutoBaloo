@@ -1,0 +1,122 @@
+﻿@model Vehicule
+@using AutoBaloo.Data.Enums;
+@{
+    ViewBag.Title = "Détails des véhicule";
+    var photoPath = "~/images/" + (Model.ImageURL ?? "noimage.jpg");
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2" style="text-align:center;">
+        <p >
+            <h1>Details for @Model.MarqueVehicule</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                
+                <div class="card-body text-center">
+                <img class="border-info rounded-pill" style="max-width:450px" src="@photoPath" asp-append-version="true" />
+                </div>
+
+
+                <div class="form-group row">
+                    
+                    <div class="col-sm-10">
+                        <input asp-for="MarqueVehicule" class="form-control" readonly />
+                        <span asp-validation-for="MarqueVehicule" class="text-danger"></span>
+                    </div>
+                </div>
+
+                    <div class="form-group row">
+                        
+                        <div class="col-sm-10">
+                            <input asp-for="DescriptionVehicule" class="form-control" readonly>
+                            <span asp-validation-for="DescriptionVehicule" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                       
+                        <div class="col-sm-10">
+                            <input asp-for="KM" class="form-control" readonly>
+                            <span asp-validation-for="KM" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                       
+                        <div class="col-sm-10">
+                            <input asp-for="CouleurVehicule" class="form-control" readonly>
+                            <span asp-validation-for="CouleurVehicule" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        
+                        <div class="col-sm-10">
+                            <input asp-for="PrixVehicule" class="form-control" readonly>
+                            <span asp-validation-for="PrixVehicule" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        
+                        <div class="col-sm-10">
+                            <input asp-for="TypeCarbu" class="form-control" readonly>
+                            <span asp-validation-for="TypeCarbu" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        
+                        <div class="col-sm-10">
+                            <input asp-for="DateConstruct" class="form-control" readonly>
+                            <span asp-validation-for="DateConstruct" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                       
+                        <div class="col-sm-10">
+                            <select asp-for="StatutVehicule" class="custom-select mr-sm-2"
+                                    asp-items="Html.GetEnumSelectList<StatutVehicule>()">
+                                <option value="">Please Select</option>
+                            </select>
+                            <span asp-validation-for="StatutVehicule" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group row">
+                       
+                        <div class="col-sm-10">
+                            <input asp-for="OptionVehicule" class="form-control" readonly>
+                            <span asp-validation-for="OptionVehicule" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <a class="btn btn-outline-success float-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                    </div>
+
+
+
+                </div>
+        </div>
+    </div>
+</div>
+
+}

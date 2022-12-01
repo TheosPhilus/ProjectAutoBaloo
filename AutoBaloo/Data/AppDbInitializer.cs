@@ -11,6 +11,7 @@ namespace AutoBaloo.Data
 {
     public class AppDbInitializer
     {
+
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
@@ -21,24 +22,24 @@ namespace AutoBaloo.Data
 
 
                 
-                                //Vehicule
+                                /*//Vehicule
                                 if (!context.Vehicules.Any())
                                 {
-                                    context.Vehicules.AddRange(new List<Vehicule>()
+                    context.Vehicules.AddRange(new List<Vehicule>()
                                     {
                                                 new Vehicule()
                                                 {
 
                                                     MarqueVehicule        = MarqueVehicule.Audi,
                                                     StatutVehicule        = StatutVehicule.Disponible,
-                                                    TypeCarbu             = "Essence",
+                                                    TypeCarbu             = "Diesel",
                                                     PrixVehicule          = 1000000,
-                                                    DescriptionVehicule   = "qvhfizufhziufhffuhfu",
-                                                    DateConstruct         = "01/01/2022",
-                                                    KM                    =  "300 km",
+                                                    DescriptionVehicule   = " Audi A3 SEDAN 1.6 TDi S tronic Business NAVI/FULL LED/JA16/PDC",
+                                                    DateConstruct         = "2017",
+                                                    KM                    =  "68.082km ",
                                                     OptionVehicule        = "A vendre",
-                                                    CouleurVehicule       = "Rouge",
-                                                    ImageURL              = "images/vehicules/1.jpeg"
+                                                    CouleurVehicule       = "noir",
+                                                    ImageURL              = "~/images/12.jpg.jpg",
                                                 },
 
                                                 new Vehicule()
@@ -46,108 +47,62 @@ namespace AutoBaloo.Data
 
                                                     MarqueVehicule        = MarqueVehicule.Audi,
                                                     StatutVehicule        = StatutVehicule.Disponible,
-                                                    TypeCarbu             = "Essence",
-                                                    PrixVehicule          = 100000000,
-                                                    DescriptionVehicule   = "qvhfizufhziufhffuhfuzfh",
-                                                    DateConstruct         = "01/01/2022",
-                                                    KM                    =  "300 km",
-                                                    OptionVehicule        = "A vendre",
+                                                    TypeCarbu             = "Diesel",
+                                                    PrixVehicule          = 255000,
+                                                    DescriptionVehicule   = " Audi A3 SEDAN 1.6 TDi S tronic Business NAVI/FULL LED/JA16/PDC",
+                                                    DateConstruct         = "2017",
+                                                    KM                    =  " 65.851km ",
+                                                    OptionVehicule        = "A Louer ",
                                                     CouleurVehicule       = "Rouge",
-                                                    ImageURL              = "images/vehicules/1.jpeg"
+                                                    ImageURL              = "~/images/1.jpg"
                                                 },
 
-                                                new Vehicule()
-                                                {
-
-                                                    MarqueVehicule        = MarqueVehicule.Audi,
-                                                    StatutVehicule        = StatutVehicule.Disponible,
-                                                    TypeCarbu             = "Essence",
-                                                    PrixVehicule          = 2000000,
-                                                    DescriptionVehicule   = "qvhfizufhziufhffuhfuzfh",
-                                                    DateConstruct         = "01/01/2022",
-                                                    KM                    =  "300 km",
-                                                    OptionVehicule        = "A vendre",
-                                                    CouleurVehicule       = "Rouge",
-                                                    ImageURL              = "images/vehicules/1.jpeg"
-                                                },
-
-                                                new Vehicule()
-                                                {
-
-                                                    MarqueVehicule        = MarqueVehicule.Audi,
-                                                    StatutVehicule        = StatutVehicule.Disponible,
-                                                    TypeCarbu             = "Essence",
-                                                    PrixVehicule          = 1000000,
-                                                    DescriptionVehicule   = "qvhfizufhziufhffuhfuzfh",
-                                                    DateConstruct         = "01/01/2022",
-                                                    KM                    =  "300 km",
-                                                    OptionVehicule        = "A vendre",
-                                                    CouleurVehicule       = "Rouge",
-                                                    ImageURL              = "images/vehicules/1.jpeg"
-                                                },
-
-                                                new Vehicule()
-                                                {
-
-                                                    MarqueVehicule        = MarqueVehicule.Audi,
-                                                    StatutVehicule        = StatutVehicule.Disponible,
-                                                    TypeCarbu             = "Essence",
-                                                    PrixVehicule          = 900000,
-                                                    DescriptionVehicule   = "qvhfizufhziufhffuhfuzfh",
-                                                    DateConstruct         = "01/01/2022",
-                                                    KM                    =  "300 km",
-                                                    OptionVehicule        = "A vendre",
-                                                    CouleurVehicule       = "Rouge",
-                                                    ImageURL              = "images/vehicules/1.jpeg"
-                                                },
-
-
-
-                                                new Vehicule()
+                                                 new Vehicule()
                                                 {
 
                                                     MarqueVehicule        = MarqueVehicule.BMW,
-                                                    StatutVehicule        = StatutVehicule.Disponible,
-                                                    TypeCarbu             = "Essence",
-                                                    PrixVehicule          = 900000,
-                                                    DescriptionVehicule   = "qvhfizufhziufhffuhfuzfh",
-                                                    DateConstruct         = "01/01/2022",
-                                                    KM                    =  "300 km",
-                                                    OptionVehicule        = "A Loué",
-                                                    CouleurVehicule       = "Jaune",
-                                                    ImageURL              = "images/vehicules/1.jpeg"
+                                                    StatutVehicule        = StatutVehicule.Loué,
+                                                    TypeCarbu             = "Diesel",
+                                                    PrixVehicule          = 20566,
+                                                    DescriptionVehicule   = "BMW X1 2.0 d sDrive18 NAVI / CUIR / PDC AV+AR / JA 17         ",
+                                                    DateConstruct         = "2017",
+                                                    KM                    =  " 89.196km ",
+                                                    OptionVehicule        = "A Louer ",
+                                                    CouleurVehicule       = "Blanc",
+                                                    ImageURL              = "~/images/2.jpg"
                                                 },
 
 
 
-                                    });
+
+                                    }) ;
 
                                     context.SaveChanges();
 
 
                                 }
 
-                            /*    //Stock
-                                if (!context.Stocks.Any())
+                             /* //Stock
+                               if (!context.Stocks.Any())
                                 {
                                     context.Stocks.AddRange(new List<Stock>()
                                     {
                                         new Stock()
                                         {
-                                              DateStock           = "01/01/2010",
+                                              DateStock           = "01/01/2022",
                                               QteStock            = 100,
-                                              IdVehicule          =  
+                                              IdVehicule          =  30
                                         },
 
                                         new Stock()
                                         {
-                                              DateStock           = "01/01/2010",
+                                              DateStock           = "01/01/2022",
                                               QteStock            = 100,
-                                               IdVehicule          =  
+                                               IdVehicule          =  31
 
                                         },
 
-                                        new Stock()
+                                       /* new Stock()
                                         {
                                               DateStock           = "01/01/2010",
                                               QteStock            = 100,
@@ -173,27 +128,35 @@ namespace AutoBaloo.Data
                                     });
                                     context.SaveChanges();
                                 }
-
-
+                           
+        */
 
 
 
                                 //Reservation
-                                if (!context.Reservations.Any())
+                           /*   if (!context.Reservations.Any())
                                 {
-                                    context.Reservations.AddRange(new List<Reservation>()
+                    context.Reservations.AddRange(new List<Reservation>()
                                     {
                                         new Reservation()
                                         {
 
-                                        }
-                                    });
+                                           DateDebut="01/05/2022",
+                                            DateFin = "01/06/2022",
+                                           Duree =30  ,
+                                           MontantReservation= " 5566",
+
+                                           TypeReservation=TypeReservation.Louer,
+                                           IdUtilisateur=1,
+                                           IdVehicule= 30,
+    }
+                                    }) ;
                                     context.SaveChanges();
 
                                 }
 
                                 //Paiement
-                                if (!context.Paiements.Any())
+                           /*     if (!context.Paiements.Any())
                                 {
                                     context.Paiements.AddRange(new List<Paiement>()
                                     {
@@ -206,7 +169,7 @@ namespace AutoBaloo.Data
                                 }
 
                                 //Utilisateur
-                                if (!context.Utilisateurs.Any())
+                              if (!context.Utilisateurs.Any())
                                 {
                                     context.Utilisateurs.AddRange(new List<Utilisateur>()
                                     {

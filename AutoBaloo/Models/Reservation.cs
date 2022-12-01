@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoBaloo.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,7 +17,7 @@ namespace AutoBaloo.Models
         public int Duree { get; set; }
         public string MontantReservation { get; set; }
         public string DateFin { get; set; }
-        public string TypeReservation { get; set; }
+        public TypeReservation TypeReservation { get; set; }
 
         //Relationships
         public List<Paiement> Paiements { get; set; }
