@@ -20,7 +20,9 @@ namespace AutoBaloo.Controllers
         public async Task <IActionResult >Index()
         {
             var allVehicules = await _context.Vehicules.ToListAsync();
-            return View();
+            return View(allVehicules);
         }
+
+        
     }
 }

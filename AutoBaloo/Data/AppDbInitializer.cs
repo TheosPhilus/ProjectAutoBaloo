@@ -116,7 +116,7 @@ namespace AutoBaloo.Data
                                                     OptionVehicule        = "A Loué",
                                                     CouleurVehicule       = "Jaune",
                                                     ImageURL              = "images/vehicules/1.jpeg"
-                                                },
+                                                }
 
 
 
