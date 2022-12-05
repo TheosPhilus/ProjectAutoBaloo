@@ -30,6 +30,11 @@ namespace AutoBaloo
 
                 ("DefaulConnectionString")));
 
+           
+
+            //service configuration
+            //services.AddScoped<IVehiculeService, VehiculeService>();
+
             services.AddControllersWithViews();
         }
 
