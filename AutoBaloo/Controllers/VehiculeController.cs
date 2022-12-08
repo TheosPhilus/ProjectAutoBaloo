@@ -18,10 +18,10 @@ namespace AutoBaloo.Controllers
 
 
         private readonly IVehiculeService _VehiculeRepository;
-
+        [Obsolete]
         private readonly IHostingEnvironment hostingEnvironment;
 
-
+        [Obsolete]
         public VehiculeController(IVehiculeService service,
                                    IHostingEnvironment hostingEnvironment)
         {
@@ -48,7 +48,7 @@ namespace AutoBaloo.Controllers
 
 
         [HttpPost]
-
+        [Obsolete]
         public async Task<IActionResult> Create(VehiculeCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -88,6 +88,7 @@ namespace AutoBaloo.Controllers
                 };
 
                 await _VehiculeRepository.AddAsync(newVehicule);
+
                 return RedirectToAction("Index", new { id = newVehicule.Id });
             }
 
@@ -111,6 +112,7 @@ namespace AutoBaloo.Controllers
         public async Task<ViewResult> Edit(int id)
         {
             Vehicule vehicule = await _VehiculeRepository.GetByIdAsync(id);
+            if (vehicule == null) return View("NotFound");
             VehiculeEditViewModel vehiculeEditViewModel = new VehiculeEditViewModel
             {
                 MarqueVehicule = vehicule.MarqueVehicule,
@@ -134,6 +136,7 @@ namespace AutoBaloo.Controllers
         // Grâce à la liaison de modèle, le paramètre de méthode d'action
         // VehiculeEditViewModel reçoit les données postées du formulaire d'édition
         [HttpPost]
+        [Obsolete]
         public async Task< IActionResult> Edit(VehiculeEditViewModel model)
         {
             // Vérifie si les données fournies sont valides, sinon restitue la vue d'édition
@@ -174,8 +177,9 @@ namespace AutoBaloo.Controllers
                 }
 
                 // Appelez la méthode de mise à jour sur le service de référentiel en lui passant le
-                // objet employé pour mettre à jour les données dans la table de la base de données
-                Vehicule updatedEmployee = await _VehiculeRepository.Update(vehicule);
+                // objet Vehicule  pour mettre à jour les données dans la table de la base de données
+               Vehicule updatedVehicule = await _VehiculeRepository.UpdateAsync(vehicule);
+              
 
                 return RedirectToAction("index");
             }
@@ -183,6 +187,26 @@ namespace AutoBaloo.Controllers
             return View(model);
         }
 
+
+        // Supprimer une voiture 
+        public async Task<IActionResult> Delete (int Id)
+        {
+            Vehicule vehicule = await _VehiculeRepository.GetByIdAsync(Id);
+            if (vehicule == null) return View("NotFound");
+            return View(vehicule);
+        }
+
+        //Le route vers la page de vérification pour supprimer une voiture
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int Id)
+        {
+            Vehicule vehicule = await _VehiculeRepository.GetByIdAsync(Id);
+            if (vehicule == null) return View("NotFound");
+            await _VehiculeRepository.DeleteAsync(Id);
+             return RedirectToAction("index");
+        }
+
+        [Obsolete]
         private string ProcessUploadedFile(VehiculeEditViewModel model)
         {
             string uniqueFileName = null;
@@ -200,6 +224,7 @@ namespace AutoBaloo.Controllers
 
             return uniqueFileName;
         }
+
     }
 
 

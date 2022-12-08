@@ -1,4 +1,6 @@
-﻿using AutoBaloo.Data.Enums;
+﻿
+using AutoBaloo.Data.Base;
+using AutoBaloo.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,14 +10,13 @@ using System.Threading.Tasks;
 
 namespace AutoBaloo.Models
 {
-    public class Reservation
+    public class Reservation 
     {
         [Key]
         public int Id { get; set; }
 
         public string DateDebut { get; set; }
         public int Duree { get; set; }
-        public string MontantReservation { get; set; }
         public string DateFin { get; set; }
         public TypeReservation TypeReservation { get; set; }
 

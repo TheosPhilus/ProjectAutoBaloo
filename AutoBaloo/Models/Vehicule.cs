@@ -1,11 +1,13 @@
-﻿using AutoBaloo.Data.Enums;
+﻿
+using AutoBaloo.Data.Base;
+using AutoBaloo.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AutoBaloo.Models
 {
-    public class Vehicule
+    public class Vehicule 
     {
         [Key]
         public int Id { get; set; }

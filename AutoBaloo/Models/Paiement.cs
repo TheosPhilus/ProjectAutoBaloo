@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using AutoBaloo.Data.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AutoBaloo.Models
 {
-    public class Paiement
+    public class Paiement 
     {
         [Key]
         public int Id { get; set; }

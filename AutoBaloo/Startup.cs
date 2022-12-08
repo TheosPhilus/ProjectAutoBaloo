@@ -32,6 +32,7 @@ namespace AutoBaloo
                 ("DefaulConnectionString")));
             //service configuration
             services.AddScoped<IVehiculeService, VehiculeService>();
+            services.AddScoped<IStockService,StockService>();
 
             services.AddControllersWithViews();
         }

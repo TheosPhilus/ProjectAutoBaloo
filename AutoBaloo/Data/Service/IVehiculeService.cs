@@ -11,12 +11,12 @@ namespace AutoBaloo.Data.Service
 
         Task<IEnumerable<Vehicule>> GetAllAsync();
 
-        Task<Vehicule> GetByIdAsync(int id);
+        Task<Vehicule> GetByIdAsync(int Id);
 
 
         Task AddAsync(Vehicule vehicule);
         //Vehicule update(int id, Vehicule vehicule);
-        void Delete(int id);
-        Task <Vehicule> Update(Vehicule vehicule);
+        Task  DeleteAsync(int Id);
+        Task <Vehicule> UpdateAsync(Vehicule vehicule);
     }
 }

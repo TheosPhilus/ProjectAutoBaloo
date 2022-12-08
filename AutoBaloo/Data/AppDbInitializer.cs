@@ -133,8 +133,8 @@ namespace AutoBaloo.Data
 
 
 
-                                //Reservation
-                           /*   if (!context.Reservations.Any())
+                          /*      //Reservation
+                            if (!context.Reservations.Any())
                                 {
                     context.Reservations.AddRange(new List<Reservation>()
                                     {
@@ -148,7 +148,7 @@ namespace AutoBaloo.Data
 
                                            TypeReservation=TypeReservation.Louer,
                                            IdUtilisateur=1,
-                                           IdVehicule= 30,
+                                           IdVehicule= 44,
     }
                                     }) ;
                                     context.SaveChanges();
@@ -166,10 +166,10 @@ namespace AutoBaloo.Data
                                         }
                                     });
                                     context.SaveChanges();
-                                }
+                                }*/
 
                                 //Utilisateur
-                              if (!context.Utilisateurs.Any())
+                           /*   if (!context.Utilisateurs.Any())
                                 {
                                     context.Utilisateurs.AddRange(new List<Utilisateur>()
                                     {
@@ -186,9 +186,9 @@ namespace AutoBaloo.Data
                                     });
                                     context.SaveChanges();
 
-                                }*/
+                                }
 
-                               
+                               */
 
             }
         }

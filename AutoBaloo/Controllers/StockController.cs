@@ -1,5 +1,10 @@
 ﻿using AutoBaloo.Data;
+using AutoBaloo.Data.Enums;
+using AutoBaloo.Data.Service;
+using AutoBaloo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,16 +15,107 @@ namespace AutoBaloo.Controllers
 {
     public class StockController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IStockService _StockRepository;
 
-        public StockController(AppDbContext context)
+        public StockController(IStockService context)
         {
-            _context = context;
+            _StockRepository = context;
         }
+
+
+        //Get : Stock/
+
         public async Task<IActionResult> Index()
         {
-            var allStocks = await _context.Stocks.ToListAsync();
-            return View(allStocks);
+            var allMovies = await _StockRepository.GetAllAsync(n => n.Vehicule);
+            return View(allMovies);
         }
+
+       
+
+        //GET: Stock/Details/1
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int id)
+        {
+            var stockDetail = await _StockRepository.GetByIdAsync(id);
+            return View(stockDetail);
+        }
+
+        //GET: Movies/Create
+        public async Task<IActionResult> Create()
+        {
+            var stockDropdownsData = await _StockRepository.GetNewStockDropdownsValues();
+
+            ViewBag.Vehicules = new SelectList(stockDropdownsData.Vehicules, "Id", "MarqueVehicule");
+            
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(NewStockVM Vehicule)
+        {
+            if (!ModelState.IsValid)
+            {
+                var StockDropdownsData = await _StockRepository.GetNewStockDropdownsValues();
+
+
+                ViewBag.Vehicules = new SelectList(StockDropdownsData.Vehicules, "Id", "MarqueVehicule");
+                return View(Vehicule);
+            }
+
+            await _StockRepository.AddNewStockAsync(Vehicule);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //GET: Movies/Edit/1
+        public async Task<IActionResult> Edit(int id)
+        {
+            var stockDetails = await _StockRepository.GetByIdAsync(id);
+            if (stockDetails == null) return View("NotFound");
+
+            var response = new NewStockVM()
+            {
+                Id = stockDetails.Id,
+                DateStock = stockDetails.DateStock,
+                QteStock = stockDetails.QteStock,
+                IdVehicule = stockDetails.IdVehicule
+            };
+
+            var stockDropdownsData = await _StockRepository.GetNewStockDropdownsValues();
+            ViewBag.Vehicules = new SelectList(stockDropdownsData.Vehicules, "Id", "MarqueVehicule");
+            
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, NewStockVM stock)
+        {
+            if (id != stock.Id) return View("NotFound");
+
+            if (!ModelState.IsValid)
+            {
+                var StockDropdownsData = await _StockRepository.GetNewStockDropdownsValues();
+
+                ViewBag.Vehicules = new SelectList(StockDropdownsData.Vehicules, "Id", "MarqueVehicule");
+                
+
+                return View(stock);
+            }
+
+            await _StockRepository.UpdateStockAsync(stock);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //GET: Movies/delete/1
+        public async Task<IActionResult> delete(int id)
+        {
+            await _StockRepository.DeleteAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }
