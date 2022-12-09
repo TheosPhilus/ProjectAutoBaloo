@@ -1,8 +1,8 @@
 ﻿
-@model IEnumerable<Stock>
+@model IEnumerable<Utilisateur>
 
 @{
-    ViewData["Title"] = "Liste des stocks ";
+    ViewData["Title"] = "Liste des Utilisateurs  ";
 }
 
 
@@ -13,20 +13,12 @@
 
     <div class="col-md-8 offset-md-2">
 
-        <div class="text-white">
-
-            <a class="btn btn-outline-info  " asp-controller="Stock" asp-action="Create">
-
-                <i class="bi bi-patch-plus"></i>  ajouter Stock
-            </a>
-
-        </div>
         <table class="table">
             <thead>
                 <tr class="text-center">
-                    <th>@Html.DisplayNameFor(model => model.Vehicule.MarqueVehicule)</th>
-                    <th>@Html.DisplayNameFor(model => model.DateStock)</th>
-                    <th>@Html.DisplayNameFor(model => model.QteStock)</th>
+                    <th>@Html.DisplayNameFor(model => model.NomUtilisateur)</th>
+                    <th>@Html.DisplayNameFor(model => model.EmailUtilisateur)</th>
+                    <th>@Html.DisplayNameFor(model => model.Adresse)</th>
 
 
                     <th>Actions</th>
@@ -38,14 +30,14 @@
                 {
                     <tr>
                         <td class="align-middle">
-                            @Html.DisplayFor(modelItem => item.Vehicule.MarqueVehicule)
+                            @Html.DisplayFor(modelItem => item.NomUtilisateur)
                         </td>
 
                         <td class="align-middle">
-                            @Html.DisplayFor(modelItem => item.DateStock)
+                            @Html.DisplayFor(modelItem => item.EmailUtilisateur)
                         </td>
                         <td class="align-middle">
-                            @Html.DisplayFor(modelItem => item.QteStock)
+                            @Html.DisplayFor(modelItem => item.Adresse)
                         </td>
 
 

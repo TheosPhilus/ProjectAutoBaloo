@@ -22,12 +22,15 @@ namespace AutoBaloo.Controllers
         private readonly IHostingEnvironment hostingEnvironment;
 
         [Obsolete]
-        public VehiculeController(IVehiculeService service,
-                                   IHostingEnvironment hostingEnvironment)
+        public VehiculeController(IVehiculeService service,IHostingEnvironment hostingEnvironment)
         {
             _VehiculeRepository = service;
             this.hostingEnvironment = hostingEnvironment;
         }
+
+        
+
+
 
 
         //afficher la liste des véhicule 
@@ -37,6 +40,22 @@ namespace AutoBaloo.Controllers
             return View(data);
         }
 
+
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var allMovies = await _VehiculeRepository.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                //var filteredResult = allMovies.Where(n => n.Name.ToLower().Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToList();
+
+                var filteredResultNew = allMovies.Where(n => String.Equals(n.DescriptionVehicule, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+                return View("Index", filteredResultNew);
+            }
+
+            return View("Index", allMovies);
+        }
 
         //créer une nouvelle véhicule 
 

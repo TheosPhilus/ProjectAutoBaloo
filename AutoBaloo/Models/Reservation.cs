@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AutoBaloo.Models
 {
-    public class Reservation 
+    public class Reservation
     {
         [Key]
         public int Id { get; set; }
@@ -19,7 +19,8 @@ namespace AutoBaloo.Models
         public int Duree { get; set; }
         public string DateFin { get; set; }
         public TypeReservation TypeReservation { get; set; }
-
+        public decimal montantReservation {get;set;}
+        public decimal Reservation_Price_Per_Day{ get; set; }
         //Relationships
         public List<Paiement> Paiements { get; set; }
 

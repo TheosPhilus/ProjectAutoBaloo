@@ -30,9 +30,11 @@ namespace AutoBaloo
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString
 
                 ("DefaulConnectionString")));
+
             //service configuration
             services.AddScoped<IVehiculeService, VehiculeService>();
             services.AddScoped<IStockService,StockService>();
+            //services.AddScoped<IUtilisateurService, UtilisateurService>();
 
             services.AddControllersWithViews();
         }
